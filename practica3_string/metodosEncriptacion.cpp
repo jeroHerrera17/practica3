@@ -39,28 +39,17 @@ string primerMetodo(const string& texto, int n){
         string bloque = "";
         num0 = 0;
         num1 = 0;
-        if(i == 0){
-            for(int j = 0; j < n; j++){
-                if (texto[j+i] == '0'){
-                    num0 ++;
-                }
-                else{
-                    num1++;
-                }
-                bloque += texto[j+n];
+
+        for(int j = 0; j < n; j++){
+            if (texto[j+i] == '0'){
+                num0 ++;
             }
-        }
-        else{
-            for(int j = 0; j < n; j++){
-                if (texto[j+i] == '0'){
-                    num0 ++;
-                }
-                else{
-                    num1++;
-                }
-                bloque += texto[j+i+n];
+            else{
+                num1++;
             }
+            bloque += texto[j+i+n];
         }
+
         if(num0 == num1){
             salto = 1;
         }
@@ -85,5 +74,91 @@ string primerMetodo(const string& texto, int n){
         }
     }
     return textoEncriptado;
+}
+
+//segundo metodo de codificacion
+string segundoMetodo(const string& texto, int n){
+    string textoEncriptado = "", bloque = "";
+    for(int i = 0; i < int(sizeof(texto)); i += n){
+        for(int j = 0; j < n; j++){
+            bloque += texto[j+i];
+        }
+        textoEncriptado += bloque[n-1];
+        for(int k = 0; k < n-1; k++){
+            textoEncriptado += bloque[k];
+        }
+        bloque = "";
+    }
+    return textoEncriptado;
+}
+
+//funcion que revierte la codificacion aplicada por el primer metodo
+string reversaPrimerMetodo(const string& texto, int n){
+    string textoDesencriptado = "";
+    int salto, num0, num1;
+    for(int i = 0; i < n; i ++){
+        if(texto[i] == '0'){
+            textoDesencriptado += '1';
+        }
+        else{
+            textoDesencriptado += '0';
+        }
+    }
+    for(int i = 0; i < int(sizeof(texto))-n; i += n){
+        string bloque = "";
+        num0 = 0;
+        num1 = 0;
+
+        for(int j = 0; j < n; j++){
+            if (textoDesencriptado[j+i] == '0'){
+                num0 ++;
+            }
+            else{
+                num1++;
+            }
+            bloque += texto[j+i+n];
+        }
+
+        if(num0 == num1){
+            salto = 1;
+        }
+        else if(num0 > num1){
+            salto = 2;
+        }
+        else{
+            salto = 3;
+        }
+        for(int k = 0; k < n; k ++){
+            if((k+1)%salto == 0){
+                if(bloque[k] == '0'){
+                    textoDesencriptado += '1';
+                }
+                else{
+                    textoDesencriptado += '0';
+                }
+            }
+            else{
+                textoDesencriptado += bloque[k];
+            }
+        }
+    }
+    return textoDesencriptado;
+}
+
+
+//funcion que revierte la codificacion aplicada por el segundo metodo
+string reversaSegundoMetodo(const string& texto, int n){
+    string textoDesencriptado = "", bloque = "";
+    for(int i = 0; i < int(sizeof(texto)); i += n){
+        for(int j = 0; j < n; j++){
+            bloque += texto[j+i];
+        }
+        for(int k = 1; k < n; k++){
+            textoDesencriptado += bloque[k];
+        }
+        textoDesencriptado += bloque[0];
+        bloque = "";
+    }
+    return textoDesencriptado;
 }
 
