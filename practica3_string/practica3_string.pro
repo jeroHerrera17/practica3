@@ -5,4 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-        manipulacionArchivos.cpp
+        manipulacionArchivos.cpp \
+        metodosEncriptacion.cpp
+
+HEADERS += \
+    manipulacionArchivos.h \
+    metodosEncriptacion.h
