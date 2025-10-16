@@ -2,6 +2,26 @@
 #include <string>
 using namespace std;
 
+//convierte un string de binarios a su mensaje (string) original
+string binarioAtexto(const string &binario) {
+    string mensaje = "";
+
+    // Recorremos el string en grupos de 8 bits (1 byte)
+    for (size_t i = 0; i + 7 < binario.size(); i += 8) {
+        int valor = 0;
+
+        // Convertimos los 8 caracteres ('0' o '1') a su valor numérico
+        for (int j = 0; j < 8; j++) {
+            valor = valor * 2 + (binario[i + j] - '0');
+        }
+
+        // Convertimos ese valor entero a un carácter ASCII
+        mensaje += static_cast<char>(valor);
+    }
+
+    return mensaje;
+}
+
 // Convierte un número entero (0–255) en una cadena binaria de 8 bits
 string aBinario(unsigned char c) {
     string binario = "";
@@ -35,7 +55,7 @@ string primerMetodo(const string& texto, int n){
             textoEncriptado += '0';
         }
     }
-    for(int i = 0; i < int(sizeof(texto))-n; i += n){
+    for(int i = 0; i < int(texto.size())-n; i += n){
         string bloque = "";
         num0 = 0;
         num1 = 0;
@@ -79,7 +99,7 @@ string primerMetodo(const string& texto, int n){
 //segundo metodo de codificacion
 string segundoMetodo(const string& texto, int n){
     string textoEncriptado = "", bloque = "";
-    for(int i = 0; i < int(sizeof(texto)); i += n){
+    for(int i = 0; i < int(texto.size()); i += n){
         for(int j = 0; j < n; j++){
             bloque += texto[j+i];
         }
@@ -104,7 +124,7 @@ string reversaPrimerMetodo(const string& texto, int n){
             textoDesencriptado += '0';
         }
     }
-    for(int i = 0; i < int(sizeof(texto))-n; i += n){
+    for(int i = 0; i < int(texto.size())-n; i += n){
         string bloque = "";
         num0 = 0;
         num1 = 0;
@@ -149,7 +169,7 @@ string reversaPrimerMetodo(const string& texto, int n){
 //funcion que revierte la codificacion aplicada por el segundo metodo
 string reversaSegundoMetodo(const string& texto, int n){
     string textoDesencriptado = "", bloque = "";
-    for(int i = 0; i < int(sizeof(texto)); i += n){
+    for(int i = 0; i < int(texto.size()); i += n){
         for(int j = 0; j < n; j++){
             bloque += texto[j+i];
         }

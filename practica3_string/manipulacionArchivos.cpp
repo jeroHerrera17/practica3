@@ -33,7 +33,7 @@ void escribirArchivo(const string& nombreArchivo, const string& texto) {
     archivo.close();
     cout << "Archivo escrito correctamente.\n";
 }
-
+/*
 // Agrega texto al final del archivo (sin borrar lo anterior)
 void agregarAlArchivo(const string& nombreArchivo, const string& texto) {
     ofstream archivo(nombreArchivo, ios::app); // modo append
@@ -46,3 +46,4 @@ void agregarAlArchivo(const string& nombreArchivo, const string& texto) {
     archivo.close();
     cout << "Texto agregado correctamente.\n";
 }
+*/

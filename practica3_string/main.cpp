@@ -12,16 +12,33 @@ int main()
     administradores = leerArchivoCompleto("C:/Users/JEROH/OneDrive/Desktop/practica3/practica3_string/datos/sudo.txt");
     usuarios = leerArchivoCompleto("C:/Users/JEROH/OneDrive/Desktop/practica3/practica3_string/datos/usuarios.txt");
 
+    /*string us = Binario("1046667210-jerito-150300\n1043240909-juasjuas-123003\n1031031313-nidea102-900000");
+    string ad = Binario("jeronimo-1046667210\nsara-31052025\nlaura-2031029\njose julian-21029301");
+    us = primerMetodo(us, 4);
+    ad = segundoMetodo(ad, 4);
+    cout << us << endl << endl << ad << endl;
+    */
+
+    administradores = reversaSegundoMetodo(administradores, 4); //SEGUNDO METODOOOO
+    usuarios = reversaPrimerMetodo(usuarios, 4); //PRIMER METODOOOOOO
+
+    cout <<"administradores: " << administradores << endl << "usuarios: " << usuarios << endl;
+
+    administradores = binarioAtexto(administradores);
+    usuarios = binarioAtexto(usuarios);
+
+    cout <<"administradores: " << administradores << endl << "usuarios: " << usuarios << endl;
+
     cout << "como deseas ingresar??(ingrese el numero correspondiente)" << endl << "1.Usuario Administrador" << endl << "2.Usuario comun" << endl;
     cin >> caso;
 
     switch(caso)
     {
-    //usuario administrador
     case 1:
     {
         string clave = "", nuevoUsuario = "", parametro = "";
-        int desReg, continuar = 0;
+        int desReg;
+        char continuar;
         bool claveCoincide = false, parametroValido;
 
         cout << "---acceder como usuario administrador---" << endl;
@@ -40,7 +57,7 @@ int main()
         case 1:
         {
             do{
-                continuar = 0;
+                continuar = '0';
                 cout << "perfecto!, primero, ";
                 do{
                     parametroValido = true;
@@ -63,12 +80,12 @@ int main()
                 }
                 while(parametroValido == false);
                 parametro += '-';
-                agregarAlArchivo("C:/Users/JEROH/OneDrive/Desktop/practica3/practica3_string/datos/usuarios.txt", parametro);
+                usuarios += parametro;
 
                 cout << "ahora, ingrese la clave del usuario: ";
                 cin >> parametro;
                 parametro += '-';
-                agregarAlArchivo("C:/Users/JEROH/OneDrive/Desktop/practica3/practica3_string/datos/usuarios.txt", parametro);
+                usuarios += parametro;
 
                 do{
                     parametroValido = true;
@@ -82,23 +99,23 @@ int main()
                 }
                 while(parametroValido == false);
                 parametro += '\n';
-                agregarAlArchivo("C:/Users/JEROH/OneDrive/Desktop/practica3/practica3_string/datos/usuarios.txt", parametro);
+                usuarios += parametro;
 
                 cout << "ingreso exitoso, deseas agregar otro usuario?, presiona 1 para SI: ";
                 cin >> continuar;
             }
-            while(continuar == 1);
+            while(continuar == '1');
             break;
         case 2:
             cout << "esta no es una opcion valida, se tomara como un no, hasta luegoooo" << endl;
             break;
         }
         }
-
+        break;
     }
 
-    //usuario comun
-    case 2:{
+    case 2:
+    {
         int fi;
         string usuariosDic[100][3], cedula = "", clave = "";
         bool cedulaValida, claveValida;
@@ -135,42 +152,75 @@ int main()
             cout << "ADIOOOOOS <3 <3 <3";
             break;
         }
-        cout << "que deseas hacer?" << endl << "1.Consultar Saldo" << endl << "2.Retirar dinero, tienes que calcular la cantidad deseada" << endl << ": ";
-        cin >> funcionRea;
+        bool continuar;
+        do{
+            continuar = false;
+            int cont;
+            cout << "que deseas hacer?" << endl << "1.Consultar Saldo" << endl << "2.Retirar dinero, tienes que calcular la cantidad deseada" << endl << ": ";
+            cin >> funcionRea;
 
-        switch(funcionRea){
-        case 1:
-        {
-            cout << "Tu saldo actual (menos el costo de consulta es: " << saldo-1000 << endl;
-            saldo -= 1000;
-            usuariosDic[fi][2] = saldo;
-        }
-        case 2:
-        {
-            cout << "Cuanto deseas retirar? (a este calor se le sumaran los 1000 de costo de uso)" << endl << "RECUERDA que tu saldo actual es " << saldo;
-            int valorRetirar;
-            bool retirarValido;
-            do{
-                retirarValido = true;
-                cout << endl << ": ";
-                cin >> valorRetirar;
-                if(valorRetirar+1000 > saldo){
-                    retirarValido =false;
+            switch(funcionRea){
+            case 1:
+            {
+                cout << "Tu saldo actual (menos el costo de consulta es: " << saldo-1000 << endl;
+                saldo -= 1000;
+                usuariosDic[fi][2] = saldo;
+                break;
+            }
+            case 2:
+            {
+                cout << "Cuanto deseas retirar? (a este calor se le sumaran los 1000 de costo de uso)" << endl << "RECUERDA que tu saldo actual es " << saldo;
+                int valorRetirar;
+                bool retirarValido;
+                do{
+                    retirarValido = true;
+                    cout << endl << ": ";
+                    cin >> valorRetirar;
+                    if(valorRetirar+1000 > saldo){
+                        cout << "este valor es mayor que tu saldo actual, ingresa otro";
+                        retirarValido =false;
+                    }
+                }while(retirarValido == false);
+                saldo -= valorRetirar+1000;
+                cout << "tu nuevo saldo es: " << saldo << endl;
+                usuariosDic[fi][2] = saldo;
+                break;
+            }
+            default:{
+                cout << "esta no es una funcionalidad valida, Hasta luegooooo" << endl;
+                break;
+            }
+                //FINALIZA LA EJECUCION.
+            }
+            cout << "deseas realizar otra funcion?, presiona 1 para realizar otra funcion: ";
+            cin >> cont;
+            if(cont == 1){
+                continuar = true;
+            }
+        }while (continuar == true);
+        usuarios = "";
+        for(int i = 0; i < 100; i++){
+            for(int j = 0; j < 3; j++){
+                usuarios += usuariosDic[i][j];
+                if (j != 2){
+                    usuarios += '-';
                 }
-            }while(retirarValido == false);
-            saldo -= valorRetirar;
-            cout << "tu nuevo saldo es: " << saldo << endl;
-            usuariosDic[fi][2] = saldo;
+            }
+            usuarios += '\n';
         }
-        default:{
-
-        }
-        //FINALIZA LA EJECUCION.
-        }
-
-
         break;
-        }
     }
+    }
+
+
+    //para finalizar se vuelven a encriptar los textos y se sobreescriben sobre los archivos txt ya existentes
+    administradores = Binario(administradores);
+    usuarios = Binario(usuarios);
+
+    administradores = segundoMetodo(administradores, 4);
+    usuarios = primerMetodo(usuarios, 4);
+
+    escribirArchivo("C:/Users/JEROH/OneDrive/Desktop/practica3/practica3_string/datos/sudo.txt", administradores);
+    escribirArchivo("C:/Users/JEROH/OneDrive/Desktop/practica3/practica3_string/datos/usuarios.txt", usuarios);
     return 0;
 }

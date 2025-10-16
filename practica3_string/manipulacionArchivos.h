@@ -9,8 +9,8 @@ string leerArchivoCompleto(const string& nombreArchivo) ;
 
 // Escribe (sobrescribe) texto en el archivo
 void escribirArchivo(const string& nombreArchivo, const string& texto) ;
-
+/*
 // Agrega texto al final del archivo (sin borrar lo anterior)
 void agregarAlArchivo(const string& nombreArchivo, const string& texto) ;
-
+*/
 #endif // MANIPULACIONARCHIVOS_H

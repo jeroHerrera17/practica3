@@ -3,6 +3,8 @@
 
 #include <string>
 using namespace std;
+//convierte un string de binarios a su mensaje (string) original
+string binarioAtexto(const string &binario);
 
 // Convierte un número entero (0–255) en una cadena binaria de 8 bits
 string aBinario(unsigned char c) ;
